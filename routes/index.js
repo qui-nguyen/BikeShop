@@ -9,6 +9,8 @@ var dataBike = [
   {name:"CEWO", url:"/images/bike-4.jpg", price:1300},
   {name:"AMIG039", url:"/images/bike-5.jpg", price:479},
   {name:"LIK099", url:"/images/bike-6.jpg", price:869},
+  {name:"SHIRO9", url:"/images/bike-4.jpg", price:1869},
+  {name:"SHIMAP99", url:"/images/bike-2.jpg", price:819},
 ]
 
 /* GET home page. */
