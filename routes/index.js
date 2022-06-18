@@ -11,6 +11,7 @@ var dataBike = [
   {name:"LIK099", url:"/images/bike-6.jpg", price:869},
   {name:"SHIRO9", url:"/images/bike-4.jpg", price:1869},
   {name:"SHIMAP99", url:"/images/bike-2.jpg", price:819},
+  {name:"SHIROU1", url:"/images/bike-1.jpg", price:519}
 ]
 
 /* GET home page. */
