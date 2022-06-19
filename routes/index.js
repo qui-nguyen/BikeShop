@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+// Function
+  // Update basket's icon 
+const basketIcon = (arrayData) => {
+  let nbItems=0;
+  for (let index = 0; index < arrayData.length; index++) {
+    nbItems += Number(arrayData[index].quantity);
+  }
+  return nbItems;
+};
+
 // Data of bikes
 var dataBike = [
   {name:"BIK045", url:"/images/bike-1.jpg", price:679},
@@ -16,10 +26,11 @@ var dataBike = [
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  // Condition when basket is empty
   if(req.session.dataCardBike == undefined){
     req.session.dataCardBike = [];
   }
-  res.render('index', {dataBike:dataBike});
+  res.render('index', {dataBike:dataBike, nbItems:basketIcon(req.session.dataCardBike)});
 });
 
 // Router basket page
@@ -27,7 +38,6 @@ router.get('/shop', function(req, res, next) {
 
 if (req.query.bikeNameFromFront !== undefined){
   var alreadyExist = false;
-  
   // Check the presence of an item in the basket
   for(var i = 0; i< req.session.dataCardBike.length; i++){
     if(req.session.dataCardBike[i].name == req.query.bikeNameFromFront){
@@ -45,13 +55,13 @@ if (req.query.bikeNameFromFront !== undefined){
     })
   }
 }
-  res.render('shop', {dataCardBike:req.session.dataCardBike});
+  res.render('shop', {dataCardBike:req.session.dataCardBike, nbItems:basketIcon(req.session.dataCardBike)});
 });
 
 // Router for delete shop
 router.get('/delete-shop', function(req, res, next){
-  req.session.dataCardBike.splice(req.query.position,1)
-  res.render('shop',{dataCardBike:req.session.dataCardBike})
+  req.session.dataCardBike.splice(req.query.position,1);
+  res.render('shop',{dataCardBike:req.session.dataCardBike, nbItems:basketIcon(req.session.dataCardBike)})
 })
 
 // Router for update nb of items (modify nb of items by form (client side))
@@ -59,8 +69,9 @@ router.post('/update-shop', function(req, res, next){
   var position = req.body.position;
   var newQuantity = req.body.quantity;
   req.session.dataCardBike[position].quantity = newQuantity;
+
   // Return to the shop (basket with nb of items updated)
-  res.render('shop',{dataCardBike:req.session.dataCardBike})
+  res.render('shop',{dataCardBike:req.session.dataCardBike, nbItems:basketIcon(req.session.dataCardBike)})
 })
 
 // Router for checkout
