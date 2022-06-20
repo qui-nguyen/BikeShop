@@ -30,7 +30,7 @@
 
         </div>
         <div class="row ariane">
-            <div class="col-12 col-md-11">
+            <div class="col-12 col-md-10 col-lg-11">
                 <nav aria-label="breadcrumb" class="col-12">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -38,8 +38,9 @@
                     </ol>
                 </nav>
             </div>
-            <div class="col-12 col-md-1">
-                <img src="/images/shopping-bag.svg" class="shopping"><span class="badge badge-pill badge-dark">
+            <div class="col-12 col-md-2 col-lg-1">
+                <img src="/images/shopping-bag.svg" class="shopping">
+                <span class="badge badge-pill <%= nbItems>0 ? 'badge-danger':'badge-dark' %>">
                     <%= nbItems %>
                 </span>
             </div>
@@ -70,7 +71,7 @@
                             <% var totalCmd=0; for(var i=0;i<dataCardBike.length;i++){ %>
                                 <tr class="basket-item">
                                     <th scope="row">
-                                        <%=i%>
+                                        <%=i+1%>
                                     </th>
                                     <td><img src=<%=dataCardBike[i].url %> class="basket-img"></td>
                                     <td>
@@ -79,7 +80,7 @@
                                     <td>
                                         <form action="/update-shop" method="POST">
                                             <input type="hidden" name="position" value="<%=i%>">
-                                            <input type="text" name="quantity" value="<%= dataCardBike[i].quantity%>">
+                                            <input type="number" name="quantity" value="<%= dataCardBike[i].quantity%>" min="1" >
                                             <button type="submit" class="btn btn-outline-info btn-sm" name="button"><i
                                                     class="fas fa-sync-alt"></i></button>
                                         </form>

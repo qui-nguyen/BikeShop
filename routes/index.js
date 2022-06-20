@@ -36,9 +36,18 @@ const shipFees = (nbTotalItems, totalBasketHorsShip) => {
   return shippingFees;
 };
 
+// Sort price and mea 
+const sortMea = (bikes) => { 
+  let meaBikes = bikes.filter(bike => bike.mea === true)
+  meaBikes.sort((a,b) => {
+    return a.price - b.price;
+  });
+  return meaBikes.slice(0,3)
+}
+
 // Data of bikes
 var dataBike = [
-  { name: "BIK045", url: "/images/bike-1.jpg", price: 679, mea: true},
+  { name: "BIK045", url: "/images/bike-1.jpg", price: 679, mea: true },
   { name: "ZOOK07", url: "/images/bike-2.jpg", price: 999, mea: false },
   { name: "TITANS", url: "/images/bike-3.jpg", price: 799, mea: false },
   { name: "CEWO", url: "/images/bike-4.jpg", price: 1300, mea: true },
@@ -46,8 +55,9 @@ var dataBike = [
   { name: "LIK099", url: "/images/bike-6.jpg", price: 869, mea: false },
   { name: "SHIRO9", url: "/images/bike-4.jpg", price: 1869, mea: true },
   { name: "SHIMAP99", url: "/images/bike-2.jpg", price: 819, mea: true },
-  { name: "SHIROU1", url: "/images/bike-1.jpg", price: 519, mea: true},
+  { name: "SHIROU1", url: "/images/bike-4.jpg", price: 519, mea: true },
 ];
+
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -55,7 +65,10 @@ router.get("/", function (req, res, next) {
   if (req.session.dataCardBike == undefined) {
     req.session.dataCardBike = [];
   }
+  let meaBikeSort = sortMea(dataBike);
+
   res.render("index", {
+    meaBikeSort: meaBikeSort,
     dataBike: dataBike,
     nbItems: basketIcon(req.session.dataCardBike),
   });
@@ -88,6 +101,7 @@ router.get("/shop", function (req, res, next) {
     basketIcon(req.session.dataCardBike),
     totalBasketNoShip(req.session.dataCardBike)
   );
+
   res.render("shop", {
     dataCardBike: req.session.dataCardBike,
     nbItems: basketIcon(req.session.dataCardBike),
